@@ -1,0 +1,39 @@
+               CVS
+ 1.#cd cvs-1.12.13
+ 2.#./configure
+ 3.#make
+ 4.#make install
+ 5.#which cvs
+ 6./usr/bin/cvs
+ 7.# groupadd cvs
+ 8.# useradd cvsroot Å¡Cg cvs
+ 9.# passwd cvsroot:root
+10.# mkdir /home/cvsroot/webapps
+11.# vi /etc/profile
+12.CVSROOT=/home/cvsroot
+13.export CVSROOT
+14.cvspserver 2401/tcp # cvs client/server operations
+15.cvspserver 2401/udp # cvs client/server operations
+16.# vi /etc/xinetd.d/cvspserver
+     service cvspserver
+     {
+        disable = no
+        socket_type = stream
+        protocol = tcp
+        wait = no
+        user = root
+        passenv = PATH
+        server = /usr/bin/cvs
+        server_args = -f --allow-root=/home/csvroot pserver
+        log_on_success +=USERID log_on_failure +=USERID
+     }
+17.# /etc/init.d/xinetd restart
+18.# netstat Å¡Cl | grep cvspserver
+19.tcp 0 0 *:cvspserver *:* LISTEN
+20.# cvs init
+21.# cvs -d /home/csvroot init
+22.#cvs -d :pserver:cvsroot@127.0.0.1:/home/cvsroot login
+     passwd : (ÃŒÃ®root)
+23.# useradd cvstest -g cvs
+24.# passwd cvstest
+25.# new PASSWORD : (cvstest) 
